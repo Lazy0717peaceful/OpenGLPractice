@@ -1,0 +1,42 @@
+CXX = g++
+CC = gcc
+
+CXXFLAGS = -std=c++17 -Wall -Wextra \
+	-Iexternal/glad/include \
+	-Iexternal/glfw/include \
+	-Isrc
+
+CFLAGS = -Iexternal/glad/include
+
+TARGET = bin/OpenGLPractice.exe
+
+MAIN_OBJ = build/main.o
+SHADER_OBJ = build/Shader.o
+GLAD_OBJ = build/gl.o
+
+OBJS = $(MAIN_OBJ) $(SHADER_OBJ) $(GLAD_OBJ)
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	@if not exist bin mkdir bin
+	$(CXX) $(OBJS) \
+	external/glfw/lib/libglfw3.a \
+	-lgdi32 -lopengl32 \
+	-o $(TARGET)
+
+$(MAIN_OBJ): src/main.cpp src/Shader.h
+	@if not exist build mkdir build
+	$(CXX) $(CXXFLAGS) -c src/main.cpp -o $(MAIN_OBJ)
+
+$(SHADER_OBJ): src/Shader.cpp src/Shader.h
+	@if not exist build mkdir build
+	$(CXX) $(CXXFLAGS) -c src/Shader.cpp -o $(SHADER_OBJ)
+
+$(GLAD_OBJ): external/glad/src/gl.c
+	@if not exist build mkdir build
+	$(CC) $(CFLAGS) -c external/glad/src/gl.c -o $(GLAD_OBJ)
+
+clean:
+	-del /Q build\*.o 2>NUL
+	-del /Q bin\OpenGLPractice.exe 2>NUL
