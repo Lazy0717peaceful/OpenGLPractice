@@ -3,6 +3,7 @@ CC = clang
 
 CXXFLAGS = -std=c++17 -Wall -Wextra \
 	-Iexternal/glad/include \
+	-Iexternal/stb \
 	-Isrc \
 	$(shell pkg-config --cflags glfw3)
 
