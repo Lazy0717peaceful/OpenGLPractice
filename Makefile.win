@@ -5,6 +5,7 @@ CXXFLAGS = -std=c++17 -Wall -Wextra \
 	-Iexternal/glad/include \
 	-Iexternal/glfw/include \
 	-Iexternal/stb \
+	-Iexternal/glm \
 	-Isrc
 
 CFLAGS = -Iexternal/glad/include
